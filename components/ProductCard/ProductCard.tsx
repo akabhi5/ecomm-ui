@@ -7,12 +7,12 @@ interface Props {
 
 const ProductCard = ({ product }: Props) => {
   return (
-    <div className="hover:shadow-md max-w-[220px]">
+    <div className="hover:shadow-md max-w-[220px] border">
       <Link href={`/product/${product.slug}`}>
         <img
           src={product.product_images[0].url}
           alt={product.name}
-          className="max-w-[170px] max-h-[220px] min-w-[170px] min-h-[220px]"
+          className="max-w-[200px] max-h-[250px] min-w-[200px] min-h-[250px]"
         />
         <div className="p-2">
           <div>{product.name}</div>

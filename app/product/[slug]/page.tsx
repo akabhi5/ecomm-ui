@@ -17,8 +17,8 @@ const Product = async ({ params }: { params: { slug: string } }) => {
 
   return (
     <section className="px-14 mx-auto my-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="flex flex-wrap justify-evenly">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+        <div className="col-span-8 flex flex-wrap justify-evenly">
           {product.product_images.map((image) => (
             <img
               key={image.id}
@@ -29,7 +29,7 @@ const Product = async ({ params }: { params: { slug: string } }) => {
             />
           ))}
         </div>
-        <div className="space-y-5">
+        <div className="col-span-4 space-y-5">
           <div className="text-4xl">{product.name}</div>
           <div className="text-2xl text-slate-700">₹ {product.price}</div>
           <div className="flex space-x-5">
