@@ -1,4 +1,5 @@
 import Link from "next/link";
+import AuthList from "./AuthList";
 
 const NavBar = () => {
   return (
@@ -8,8 +9,12 @@ const NavBar = () => {
       </div>
       <div>
         <ul className="flex space-x-5">
-          <li>Categories</li>
-          <li>User</li>
+          <li>
+            <Link href="/categories" className="hover:underline">
+              Categories
+            </Link>
+          </li>
+          <AuthList />
         </ul>
       </div>
     </nav>
