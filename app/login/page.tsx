@@ -5,6 +5,7 @@ import { useUserStore } from "@/store/useStore";
 import { User } from "@/types/user";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 type Inputs = {
   email: string;
@@ -33,6 +34,7 @@ const Login = () => {
     if (res.ok) {
       const user: User = await res.json();
       setUser({ isAuthenticated: true, user: user });
+      toast.success("Logged in", { position: "bottom-right" });
       router.push("/");
     }
   };

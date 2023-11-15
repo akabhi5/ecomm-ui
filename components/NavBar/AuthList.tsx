@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Spinner from "../Spinner/Spinner";
+import toast from "react-hot-toast";
 
 const AuthList = () => {
   const user = useUserStore();
@@ -26,6 +27,7 @@ const AuthList = () => {
     const res = await fetch("/api/logout", { method: "POST" });
     if (res.ok) {
       user.logout();
+      toast.success("Logged out", { position: "bottom-right" });
       router.push("/");
     }
   };
