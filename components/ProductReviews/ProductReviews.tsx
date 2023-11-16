@@ -20,12 +20,12 @@ const getProductReviews = async (productSlug: string) => {
 const ProductReviews = ({ productSlug, reloadComments }: Props) => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const name = useUserStore((store) => store.user.name);
+  const userId = useUserStore((store) => store.user.id);
 
   useEffect(() => {
     const getReviews = async () => {
       let res: Review[] = await getProductReviews(productSlug);
-      if (name) res = moveObjectToZeroIndex<Review>(res, name);
+      if (userId) res = moveObjectToZeroIndex<Review>(res, userId);
       setReviews(res);
       setIsLoading(false);
     };

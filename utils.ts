@@ -8,20 +8,18 @@ export const generateInitials = (fullName: string): string => {
 };
 
 type ObjectWithName = {
-  customer: string;
+  customerId: number;
   // Other keys in the object
 };
 
 export function moveObjectToZeroIndex<T extends ObjectWithName>(
   objects: T[],
-  name: string
+  userId: number
 ): T[] {
-  const index = objects.findIndex((obj) => obj.customer === name);
-
+  const index = objects.findIndex((obj) => obj.customerId === userId);
   if (index !== -1) {
     const [selectedObject] = objects.splice(index, 1);
     objects.unshift(selectedObject);
   }
-
   return objects;
 }
