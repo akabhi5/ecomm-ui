@@ -1,9 +1,7 @@
 import { Product } from "@/types/products";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
-import ProductReviews from "@/components/ProductReviews/ProductReviews";
-import ReviewComment from "@/components/ReviewComment/ReviewComment";
-import { useRef } from "react";
+import Reviews from "@/components/Reviews/Reviews";
 
 async function getData(slug: string) {
   const res = await fetch(`${process.env.API_URL}/products/${slug}/`);
@@ -46,15 +44,7 @@ const Product = async ({ params }: { params: { slug: string } }) => {
         </div>
       </div>
       <hr className="my-16" />
-      <h3 className="text-2xl mb-3">Reviews</h3>
-      <div className="grid grid-flow-col grid-cols-10 gap-6 items-start">
-        <div className="col-span-6">
-          <ProductReviews productSlug={params.slug} />
-        </div>
-        <div className="col-span-4">
-          <ReviewComment productSlug={params.slug} />
-        </div>
-      </div>
+      <Reviews productSlug={params.slug} />
     </section>
   );
 };
