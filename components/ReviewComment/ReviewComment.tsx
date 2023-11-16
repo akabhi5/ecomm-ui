@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 
 interface Props {
   productSlug: string;
+  newCommentSignal: () => void;
 }
 
 type Inputs = {
@@ -22,17 +23,17 @@ const postReviews = async (productSlug: string, data: Inputs) => {
     body: JSON.stringify(data),
   });
   const result = await res.json();
-  console.log(result, res.status);
   return res.ok;
 };
 
-const ReviewComment = ({ productSlug }: Props) => {
+const ReviewComment = ({ productSlug, newCommentSignal }: Props) => {
   const { register, handleSubmit, reset } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const res = await postReviews(productSlug, data);
     if (res) {
       reset();
+      newCommentSignal();
     }
   };
 
