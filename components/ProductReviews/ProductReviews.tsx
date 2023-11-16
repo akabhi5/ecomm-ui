@@ -7,7 +7,6 @@ import ReviewCard from "../ReviewCard/ReviewCard";
 
 interface Props {
   productSlug: string;
-  newCommentAdd: () => {};
 }
 
 const getProductReviews = async (productSlug: string) => {
@@ -15,7 +14,7 @@ const getProductReviews = async (productSlug: string) => {
   return await res.json();
 };
 
-const ProductReviews = ({ productSlug, newCommentAdd }: Props) => {
+const ProductReviews = ({ productSlug }: Props) => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
