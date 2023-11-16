@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Spinner from "../Spinner/Spinner";
 import { Review } from "@/types/review";
 import ReviewCard from "../ReviewCard/ReviewCard";
+import { moveObjectToZeroIndex } from "@/utils";
+import { useUserStore } from "@/store/useStore";
 
 interface Props {
   productSlug: string;
@@ -18,25 +20,17 @@ const getProductReviews = async (productSlug: string) => {
 const ProductReviews = ({ productSlug, reloadComments }: Props) => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const name = useUserStore((store) => store.user.name);
 
   useEffect(() => {
     const getReviews = async () => {
-      const res = await getProductReviews(productSlug);
+      let res: Review[] = await getProductReviews(productSlug);
+      if (name) res = moveObjectToZeroIndex<Review>(res, name);
       setReviews(res);
       setIsLoading(false);
     };
     getReviews();
   }, [productSlug, reloadComments]);
-
-  const addNewComment = () => {
-    const comment = {
-      id: 1000,
-      customer: "string",
-      product: productSlug,
-      comment: " some comment",
-    } as Review;
-    setReviews((prev) => [comment, ...prev]);
-  };
 
   return (
     <section className="flex flex-col space-y-5">
