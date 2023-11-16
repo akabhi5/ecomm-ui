@@ -1,5 +1,6 @@
 import { Review } from "@/types/review";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { generateInitials } from "@/utils";
 
 interface Props {
   review: Review;
@@ -10,8 +11,7 @@ const ReviewCard = ({ review }: Props) => {
     <div className="border p-3 rounded-md">
       <div className="flex items-center space-x-5 mb-4">
         <Avatar>
-          <AvatarImage src="https://i.pravatar.cc/300" />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarFallback>{generateInitials(review.customer)}</AvatarFallback>
         </Avatar>
 
         <div className="text-xl">{review.customer}</div>
