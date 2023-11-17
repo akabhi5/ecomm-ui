@@ -3,42 +3,22 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 
 interface Props {
-  productSlug: string;
-  newCommentSignal: () => void;
+  onSubmitComment: (comment: string) => Promise<boolean>;
+  isSubmittingComment: boolean;
 }
 
 type Inputs = {
   comment: string;
 };
 
-const postReviews = async (productSlug: string, data: Inputs) => {
-  const res = await fetch(`/api/reviews/${productSlug}`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-  const result = await res.json();
-  return res.ok;
-};
-
-const ReviewComment = ({ productSlug, newCommentSignal }: Props) => {
+const ReviewComment = ({ onSubmitComment, isSubmittingComment }: Props) => {
   const { register, handleSubmit, reset } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const res = await postReviews(productSlug, data);
-    if (res) {
-      reset();
-      newCommentSignal();
-      toast.success("Comment added", { position: "bottom-right" });
-    } else {
-      toast.error("Comment not add. Try again!", { position: "bottom-right" });
-    }
+    const res = await onSubmitComment(data.comment);
+    if (res) reset();
   };
 
   return (
@@ -50,7 +30,9 @@ const ReviewComment = ({ productSlug, newCommentSignal }: Props) => {
         {...register("comment")}
       ></textarea>
       <div className="float-right">
-        <Button type="submit">Comment</Button>
+        <Button type="submit" disabled={isSubmittingComment}>
+          Comment
+        </Button>
       </div>
     </form>
   );
