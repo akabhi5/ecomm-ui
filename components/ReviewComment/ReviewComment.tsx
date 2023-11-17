@@ -7,13 +7,18 @@ import { SubmitHandler, useForm } from "react-hook-form";
 interface Props {
   onSubmitComment: (comment: string) => Promise<boolean>;
   isSubmittingComment: boolean;
+  isAuthenticated: boolean;
 }
 
 type Inputs = {
   comment: string;
 };
 
-const ReviewComment = ({ onSubmitComment, isSubmittingComment }: Props) => {
+const ReviewComment = ({
+  onSubmitComment,
+  isSubmittingComment,
+  isAuthenticated,
+}: Props) => {
   const { register, handleSubmit, reset } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -30,9 +35,15 @@ const ReviewComment = ({ onSubmitComment, isSubmittingComment }: Props) => {
         {...register("comment")}
       ></textarea>
       <div className="float-right">
-        <Button type="submit" disabled={isSubmittingComment}>
-          Comment
-        </Button>
+        {isAuthenticated ? (
+          <Button type="submit" disabled={isSubmittingComment}>
+            Comment
+          </Button>
+        ) : (
+          <Button type="submit" disabled={true}>
+            Login to comment
+          </Button>
+        )}
       </div>
     </form>
   );

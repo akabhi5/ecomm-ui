@@ -44,6 +44,7 @@ const Reviews = ({ productSlug }: Props) => {
   const [isSubmittingComment, setIsSubmittingComment] =
     useState<boolean>(false);
   const user = useUserStore((store) => store.user);
+  const isAuthenticated = useUserStore((store) => store.isAuthenticated);
 
   useEffect(() => {
     const getReviews = async () => {
@@ -107,6 +108,7 @@ const Reviews = ({ productSlug }: Props) => {
           <ReviewComment
             onSubmitComment={onSubmitComment}
             isSubmittingComment={isSubmittingComment}
+            isAuthenticated={isAuthenticated}
           />
         </div>
       </div>
