@@ -3,6 +3,7 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 interface Props {
   productSlug: string;
@@ -34,6 +35,9 @@ const ReviewComment = ({ productSlug, newCommentSignal }: Props) => {
     if (res) {
       reset();
       newCommentSignal();
+      toast.success("Comment added", { position: "bottom-right" });
+    } else {
+      toast.error("Comment not add. Try again!", { position: "bottom-right" });
     }
   };
 
