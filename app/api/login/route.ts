@@ -20,5 +20,5 @@ export async function POST(request: Request) {
       httpOnly: true,
     });
   });
-  return Response.json(result);
+  return Response.json(result, { status: res.status });
 }

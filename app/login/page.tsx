@@ -31,11 +31,14 @@ const Login = () => {
       },
       body: JSON.stringify(data),
     });
+
     if (res.ok) {
       const user: User = await res.json();
       setUser({ isAuthenticated: true, user: user });
       toast.success("Logged in", { position: "bottom-right" });
       router.push("/");
+    } else {
+      toast.error("Invalid username or email", { position: "bottom-right" });
     }
   };
 
