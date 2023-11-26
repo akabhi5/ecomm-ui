@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useUserStore } from "@/store/useStore";
 import { User } from "@/types/user";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
@@ -13,6 +14,7 @@ type Inputs = {
 };
 
 const Login = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const setUser = useUserStore((store) => store.setUser);
   const {
@@ -22,6 +24,7 @@ const Login = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setIsLoading(true);
     const url = `/api/login`;
     const res = await fetch(url, {
       method: "POST",
@@ -31,6 +34,7 @@ const Login = () => {
       },
       body: JSON.stringify(data),
     });
+    setIsLoading(false);
 
     if (res.ok) {
       const user: User = await res.json();
@@ -75,7 +79,9 @@ const Login = () => {
           />
         </div>
 
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={isLoading}>
+          Submit
+        </Button>
       </form>
     </div>
   );

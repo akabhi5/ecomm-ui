@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
@@ -12,6 +13,8 @@ type Inputs = {
 };
 
 const Register = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -29,6 +32,7 @@ const Register = () => {
       return;
     }
 
+    setIsLoading(true);
     const url = `/api/register`;
     const res = await fetch(url, {
       method: "POST",
@@ -42,6 +46,7 @@ const Register = () => {
         password: data.password,
       }),
     });
+    setIsLoading(false);
 
     const response = await res.json();
 
@@ -145,7 +150,9 @@ const Register = () => {
           )}
         </div>
 
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={isLoading}>
+          Submit
+        </Button>
       </form>
     </div>
   );

@@ -1,5 +1,5 @@
+import SubCategoryCard from "@/components/SubCategoryCard/SubCategoryCard";
 import { Category } from "@/types/category";
-import Link from "next/link";
 
 async function getCategories() {
   const res = await fetch(`${process.env.API_URL}/products/category/`, {
@@ -17,15 +17,21 @@ const Categories = async () => {
   const categories: Category[] = await getCategories();
 
   return (
-    <div>
+    <div className="max-w-7xl mx-auto">
       {categories.map((category) => (
-        <Link
-          key={category.id}
-          href={`categories/${category.slug}`}
-          className="flex hover:underline"
-        >
-          {category.name}
-        </Link>
+        <div key={category.id} className="my-10">
+          <div className="text-2xl my-5">{category.name}</div>
+          <div className="flex flex-wrap gap-4">
+            {category.subcategories.map((subcategory) => (
+              <SubCategoryCard
+                key={subcategory.id}
+                name={subcategory.name}
+                image={subcategory.image}
+                slug={subcategory.slug}
+              />
+            ))}
+          </div>
+        </div>
       ))}
     </div>
   );
