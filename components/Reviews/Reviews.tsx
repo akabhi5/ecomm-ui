@@ -5,7 +5,7 @@ import ProductReviews from "../ProductReviews/ProductReviews";
 import ReviewComment from "../ReviewComment/ReviewComment";
 import { Review } from "@/types/review";
 import { moveObjectToZeroIndex } from "@/utils";
-import { useUserStore } from "@/store/useStore";
+import { useUserStore } from "@/store/userStore";
 import toast from "react-hot-toast";
 
 interface Props {

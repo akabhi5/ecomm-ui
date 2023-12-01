@@ -2,6 +2,7 @@ import { Product } from "@/types/products";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
 import Reviews from "@/components/Reviews/Reviews";
+import AddToCart from "@/components/AddToCart/AddToCart";
 
 async function getData(slug: string) {
   const res = await fetch(`${process.env.API_URL}/products/${slug}/`);
@@ -34,7 +35,7 @@ const Product = async ({ params }: { params: { slug: string } }) => {
           <div className="text-4xl">{product.name}</div>
           <div className="text-2xl text-slate-700">₹ {product.price}</div>
           <div className="flex space-x-5">
-            <Button>Add to bag</Button>
+            <AddToCart productSlug={params.slug} />
             <Button variant="outline">
               <Heart className="mr-2 h-4 w-4" />
               Wishlist

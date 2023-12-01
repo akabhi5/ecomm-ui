@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useUserStore } from "@/store/useStore";
+import { useUserStore } from "@/store/userStore";
 import { User } from "@/types/user";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

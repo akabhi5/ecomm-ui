@@ -13,3 +13,9 @@ export interface ProductImage {
   id: number;
   url: string;
 }
+
+export interface ProductPartial {
+  id: number;
+  name: string;
+  slug: string;
+}
