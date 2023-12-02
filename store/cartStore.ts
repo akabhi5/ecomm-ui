@@ -1,4 +1,5 @@
 import { CartItem } from "@/types/cart";
+import { Product } from "@/types/products";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 const myMiddlewares = (f: any) => devtools(persist(f, { name: "bearStore" }));
@@ -9,6 +10,21 @@ interface CartState {
   addBulk: (cartItems: CartItem[]) => void;
   remove: (productSlug: string) => void;
   change: (productSlug: string, quantity: number) => void;
+}
+
+function updateQuantityBySlug(
+  cartItemsArr: CartItem[],
+  targetSlug: string,
+  newQuantity: number
+) {
+  let newArray = [...cartItemsArr];
+  for (let i = 0; i < newArray.length; i++) {
+    if (newArray[i].product.slug === targetSlug) {
+      newArray[i].quantity = newQuantity;
+      break;
+    }
+  }
+  return newArray;
 }
 
 export const useCartStore = create<CartState>()(
@@ -25,6 +41,14 @@ export const useCartStore = create<CartState>()(
         );
         return { cart: [...cartData] };
       }),
-    change: (productSlug: string, quantity: number) => set((state) => []),
+    change: (productSlug: string, quantity: number) =>
+      set((state) => {
+        const updatedCart = updateQuantityBySlug(
+          state.cart,
+          productSlug,
+          quantity
+        );
+        return { cart: [...updatedCart] };
+      }),
   }))
 );

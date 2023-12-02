@@ -30,9 +30,24 @@ export async function POST(request: Request) {
   return Response.json(result, { status: res.status });
 }
 
+export async function PATCH(request: Request) {
+  const data = await request.json();
+  const deleteUrl = `${url}${data.productSlug}/`;
+  const res = await fetch(deleteUrl, {
+    method: "PATCH",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${cookies().get("token")?.value}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ quantity: data.quantity }),
+  });
+  return Response.json({ status: res.status });
+}
+
 export async function DELETE(request: Request) {
   const data = await request.json();
-  const deleteUrl = `${url}${data.productSlug}`;
+  const deleteUrl = `${url}${data.productSlug}/`;
   const res = await fetch(deleteUrl, {
     method: "DELETE",
     headers: {
