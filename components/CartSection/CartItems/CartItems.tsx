@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cartStore";
 import { CartItem } from "@/types/cart";
 import { Trash2 } from "lucide-react";
+import Link from "next/link";
 import { ChangeEvent } from "react";
 
 interface Props {
@@ -46,24 +47,36 @@ const CartItems = ({ item }: Props) => {
   };
 
   return (
-    <div className="border rounded p-3 space-y-3">
-      <h3 className="text-xl">{item.product.name}</h3>
-      <div className="flex space-x-4 items-center">
-        <div>Quantity: </div>
-        <select
-          defaultValue={item.quantity}
-          onChange={changeQty}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2"
-        >
-          {allowedQuantities.map((qty) => (
-            <option value={qty} key={qty}>
-              {qty}
-            </option>
-          ))}
-        </select>
-        <Button variant="outline" size="icon" onClick={removeFromCart}>
-          <Trash2 color="red" className="h-4 w-4" />
-        </Button>
+    <div className="border rounded p-3 space-y-3 flex items-center space-x-5">
+      <Link href={`/product/${item.product.slug}`}>
+        <img
+          src={item.product.product_images[0].url}
+          alt={item.product.name}
+          className="w-[100px] h-[130px]"
+        />
+      </Link>
+
+      <div className="flex flex-col space-y-5">
+        <Link href={`/product/${item.product.slug}`}>
+          <h3 className="text-xl">{item.product.name}</h3>
+        </Link>
+        <div className="flex space-x-4 items-center">
+          <div>Quantity: </div>
+          <select
+            defaultValue={item.quantity}
+            onChange={changeQty}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2"
+          >
+            {allowedQuantities.map((qty) => (
+              <option value={qty} key={qty}>
+                {qty}
+              </option>
+            ))}
+          </select>
+          <Button variant="outline" size="icon" onClick={removeFromCart}>
+            <Trash2 color="red" className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
     </div>
   );

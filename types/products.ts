@@ -18,4 +18,5 @@ export interface ProductPartial {
   id: number;
   name: string;
   slug: string;
+  product_images: ProductImage[];
 }
