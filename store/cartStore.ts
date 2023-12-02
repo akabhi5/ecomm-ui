@@ -5,7 +5,6 @@ const myMiddlewares = (f: any) => devtools(persist(f, { name: "bearStore" }));
 
 interface CartState {
   cart: CartItem[];
-  setCart: (cartItem: CartItem) => void;
   add: (cartItem: CartItem) => void;
   addBulk: (cartItems: CartItem[]) => void;
   remove: (productSlug: string) => void;
@@ -15,7 +14,6 @@ interface CartState {
 export const useCartStore = create<CartState>()(
   myMiddlewares((set) => ({
     cart: [] as CartItem[],
-    setCart: (cartItem: CartItem) => set(cartItem),
     add: (cartItem: CartItem) =>
       set((state) => ({ cart: [...state.cart, cartItem] })),
     addBulk: (cartItems: CartItem[]) =>

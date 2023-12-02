@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Spinner from "../Spinner/Spinner";
 import toast from "react-hot-toast";
+import NavCart from "../NavCart/NavCart";
 
 const AuthList = () => {
   const user = useUserStore();
@@ -53,6 +54,9 @@ const AuthList = () => {
 
       {user.isAuthenticated && (
         <>
+          <li>
+            <NavCart href="/cart" />
+          </li>
           <li>
             <Link href="/profile" className="hover:underline">
               Profile

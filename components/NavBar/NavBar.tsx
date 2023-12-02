@@ -1,6 +1,5 @@
 import Link from "next/link";
 import AuthList from "./AuthList";
-import NavCart from "../NavCart/NavCart";
 
 const NavBar = () => {
   return (
@@ -10,9 +9,6 @@ const NavBar = () => {
       </div>
       <div>
         <ul className="flex space-x-5">
-          <li>
-            <NavCart href="/cart" />
-          </li>
           <li>
             <Link href="/categories" className="hover:underline">
               Categories

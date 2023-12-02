@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "../ui/button";
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -20,6 +20,8 @@ const ReviewComment = ({
   isAuthenticated,
 }: Props) => {
   const { register, handleSubmit, reset } = useForm<Inputs>();
+
+  useEffect(() => {}, [isAuthenticated]);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const res = await onSubmitComment(data.comment);

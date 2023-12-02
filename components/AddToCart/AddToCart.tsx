@@ -14,32 +14,17 @@ const AddToCart = ({ productSlug }: Props) => {
   const [isInCart, setIsInCart] = useState(false);
 
   const add = useCartStore((cart) => cart.add);
-  const addBulk = useCartStore((cart) => cart.addBulk);
+  const cart = useCartStore((cart) => cart.cart);
   const remove = useCartStore((cart) => cart.remove);
   const url = "/api/cart";
 
   useEffect(() => {
-    const getCartItems = async () => {
-      const res = await fetch(url, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
-      if (res.ok) {
-        const responseData: CartItem[] = await res.json();
-        addBulk(responseData);
-
-        for (const cartItem of responseData) {
-          if (cartItem.product.slug == productSlug) {
-            setIsInCart(true);
-          }
-        }
+    for (const cartItem of cart) {
+      if (cartItem.product.slug == productSlug) {
+        setIsInCart(true);
       }
-    };
-    getCartItems();
-  }, [addBulk, productSlug]);
+    }
+  }, [cart, productSlug]);
 
   const addToCart = async () => {
     const data = { quantity: 1, product_slug: productSlug };
