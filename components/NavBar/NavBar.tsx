@@ -14,6 +14,11 @@ const NavBar = () => {
               Categories
             </Link>
           </li>
+          <li>
+            <Link href="/brands" className="hover:underline">
+              Brands
+            </Link>
+          </li>
           <AuthList />
         </ul>
       </div>
