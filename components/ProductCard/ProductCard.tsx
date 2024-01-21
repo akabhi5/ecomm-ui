@@ -12,9 +12,9 @@ const ProductCard = ({ product }: Props) => {
         <img
           src={product.product_images[0].url}
           alt={product.name}
-          className="max-w-[200px] max-h-[250px] min-w-[200px] min-h-[250px]"
+          className="w-fit max-h-[250px] min-w-[200px] min-h-[250px] object-cover"
         />
-        <div className="p-2">
+        <div className="p-2 text-center">
           <div>{product.name}</div>
           <div>
             Price: <span className="text-slate-600">₹ {product.price}</span>
