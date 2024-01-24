@@ -94,7 +94,11 @@ const Reviews = ({ productSlug }: Props) => {
 
   return (
     <>
-      <h3 className="text-2xl mb-3">Reviews</h3>
+      {reviews?.length > 0 ? (
+        <h3 className="text-2xl mb-3">Reviews</h3>
+      ) : (
+        <h3 className="text-2xl mb-3">No reviews yet</h3>
+      )}
       <div className="grid grid-flow-col grid-cols-10 gap-6 items-start">
         <div className="col-span-6">
           <ProductReviews
