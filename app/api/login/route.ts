@@ -13,12 +13,14 @@ export async function POST(request: Request) {
   });
   const result = await res.json();
 
-  const mins_45 = 45 * 60 * 1000;
-  Object.keys(result).forEach((key) => {
-    cookies().set(key, result[key], {
-      expires: Date.now() + mins_45,
-      httpOnly: true,
+  if (res.ok) {
+    const mins_45 = 45 * 60 * 1000;
+    Object.keys(result).forEach((key) => {
+      cookies().set(key, result[key], {
+        expires: Date.now() + mins_45,
+        httpOnly: true,
+      });
     });
-  });
+  }
   return Response.json(result, { status: res.status });
 }

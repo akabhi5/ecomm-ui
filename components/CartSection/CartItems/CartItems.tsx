@@ -50,8 +50,8 @@ const CartItems = ({ item }: Props) => {
     <div className="border rounded p-3 space-y-3 flex items-center space-x-5">
       <Link href={`/product/${item.product.slug}`}>
         <img
-          src={item.product.product_images[0].url}
-          alt={item.product.name}
+          src={item?.product?.product_images[0].url}
+          alt={item?.product?.name}
           className="w-[100px] h-[130px]"
         />
       </Link>
