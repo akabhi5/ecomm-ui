@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import Spinner from "../Spinner/Spinner";
 import toast from "react-hot-toast";
 import NavCart from "../NavCart/NavCart";
-import { getUserObj, logout } from "@/lib/lib";
+import { getUserObj, logout } from "@/service/authService";
 
 const AuthList = () => {
   const user = useUserStore();

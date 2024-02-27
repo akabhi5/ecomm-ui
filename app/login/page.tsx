@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { login } from "@/lib/lib";
+import { login } from "@/service/authService";
 import { useUserStore } from "@/store/userStore";
 import { User } from "@/types/user";
 import { useRouter } from "next/navigation";

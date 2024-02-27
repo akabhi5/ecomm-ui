@@ -68,7 +68,7 @@ export async function logout() {
 export const isAuthenticated = () => {
   const result =
     cookies().has("token") && cookies().has("email") && cookies().has("name");
-  if (!result) clearAuthCookie();
+  // if (!result) clearAuthCookie(); not working
   return result;
 };
 

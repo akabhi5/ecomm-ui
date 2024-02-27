@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isAuthenticated } from "./lib/lib";
+import { isAuthenticated } from "./service/authService";
 
 export function middleware(request: NextRequest) {
   if (isAuthenticated()) {
