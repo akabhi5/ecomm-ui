@@ -1,8 +1,11 @@
+"use server";
+
+import { CartItem } from "@/types/cart";
 import { cookies } from "next/headers";
 
 const url = `${process.env.API_URL}/cart/cart-items/`;
 
-export async function GET() {
+export async function getCartItems(): Promise<CartItem[]> {
   const res = await fetch(url, {
     method: "GET",
     headers: {
@@ -11,12 +14,19 @@ export async function GET() {
       Authorization: `Bearer ${cookies().get("token")?.value}`,
     },
   });
-  const result = await res.json();
-  return Response.json(result, { status: res.status });
+
+  if (res.ok) {
+    const result: CartItem[] = await res.json();
+    return result;
+  }
+  return [] as CartItem[];
 }
 
-export async function POST(request: Request) {
-  const data = await request.json();
+export async function addItemToCart(
+  quantity: number,
+  productSlug: string
+): Promise<[CartItem, boolean]> {
+  const data = { quantity: quantity, product_slug: productSlug };
   const res = await fetch(url, {
     method: "POST",
     headers: {
@@ -26,13 +36,18 @@ export async function POST(request: Request) {
     },
     body: JSON.stringify(data),
   });
-  const result = await res.json();
-  return Response.json(result, { status: res.status });
+  if (res.ok) {
+    const result: CartItem = await res.json();
+    return [result, true];
+  }
+  return [{} as CartItem, false];
 }
 
-export async function PATCH(request: Request) {
-  const data = await request.json();
-  const deleteUrl = `${url}${data.productSlug}/`;
+export async function changeQuantityOfCartItem(
+  quantity: number,
+  productSlug: string
+): Promise<boolean> {
+  const deleteUrl = `${url}${productSlug}/`;
   const res = await fetch(deleteUrl, {
     method: "PATCH",
     headers: {
@@ -40,14 +55,18 @@ export async function PATCH(request: Request) {
       Authorization: `Bearer ${cookies().get("token")?.value}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ quantity: data.quantity }),
+    body: JSON.stringify({ quantity: quantity }),
   });
-  return Response.json({ status: res.status });
+  if (res.ok) {
+    return true;
+  }
+  return false;
 }
 
-export async function DELETE(request: Request) {
-  const data = await request.json();
-  const deleteUrl = `${url}${data.productSlug}/`;
+export async function removeItemFromCart(
+  productSlug: string
+): Promise<boolean> {
+  const deleteUrl = `${url}${productSlug}/`;
   const res = await fetch(deleteUrl, {
     method: "DELETE",
     headers: {
@@ -56,5 +75,8 @@ export async function DELETE(request: Request) {
       "Content-Type": "application/json",
     },
   });
-  return Response.json({ status: res.status });
+  if (res.ok) {
+    return true;
+  }
+  return false;
 }

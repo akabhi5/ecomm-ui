@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { useCartStore } from "@/store/cartStore";
 import { CartItem } from "@/types/cart";
 import { useEffect, useState } from "react";
+import { addItemToCart } from "@/service/cartService";
 
 interface Props {
   productSlug: string;
@@ -27,18 +28,10 @@ const AddToCart = ({ productSlug }: Props) => {
   }, [cart, productSlug]);
 
   const addToCart = async () => {
-    const data = { quantity: 1, product_slug: productSlug };
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    if (res.ok) {
-      const responseData: CartItem = await res.json();
-      add(responseData);
+    const defaultQuantity = 1;
+    const [cartItem, res] = await addItemToCart(defaultQuantity, productSlug);
+    if (res) {
+      add(cartItem);
       setIsInCart(true);
       toast.success("Added to cart!", { position: "bottom-right" });
     }

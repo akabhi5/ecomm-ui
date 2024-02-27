@@ -1,4 +1,8 @@
 import { Button } from "@/components/ui/button";
+import {
+  changeQuantityOfCartItem,
+  removeItemFromCart,
+} from "@/service/cartService";
 import { useCartStore } from "@/store/cartStore";
 import { CartItem } from "@/types/cart";
 import { Trash2 } from "lucide-react";
@@ -10,7 +14,6 @@ interface Props {
 }
 
 const allowedQuantities = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const url = "/api/cart";
 
 const CartItems = ({ item }: Props) => {
   const change = useCartStore((cart) => cart.change);
@@ -18,30 +21,15 @@ const CartItems = ({ item }: Props) => {
 
   const changeQty = async (e: ChangeEvent<HTMLSelectElement>) => {
     const updatedQty = parseInt(e.target.value);
-    const data = { quantity: updatedQty, productSlug: item.product.slug };
-    const res = await fetch(url, {
-      method: "PATCH",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    if (res.ok) {
+    const res = await changeQuantityOfCartItem(updatedQty, item.product.slug);
+    if (res) {
       change(item.product.slug, updatedQty);
     }
   };
 
   const removeFromCart = async () => {
-    const res = await fetch(url, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ productSlug: item.product.slug }),
-    });
-    if (res.ok) {
+    const res = await removeItemFromCart(item.product.slug);
+    if (res) {
       remove(item.product.slug);
     }
   };
