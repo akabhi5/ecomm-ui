@@ -1,12 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
-
-export const isAuthenticated = () => {
-  // request can also be used to get cookies
-  return (
-    cookies().has("token") && cookies().has("email") && cookies().has("name")
-  );
-};
+import { isAuthenticated } from "./lib/lib";
 
 export function middleware(request: NextRequest) {
   if (isAuthenticated()) {
@@ -23,6 +16,8 @@ export function middleware(request: NextRequest) {
   }
 }
 
+// these matcher decides on which routes middleware will be executed
 export const config = {
-  matcher: ["/login", "/profile", "/register"],
+  // match for all routes except static pages and api routes
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };

@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { login } from "@/lib/lib";
 import { useUserStore } from "@/store/userStore";
 import { User } from "@/types/user";
 import { useRouter } from "next/navigation";
@@ -24,21 +25,9 @@ const Login = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    setIsLoading(true);
-    const url = `/api/login`;
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    setIsLoading(false);
-
-    if (res.ok) {
-      const user: User = await res.json();
-      setUser({ isAuthenticated: true, user: user });
+    const [result, userObj] = await login(data.email, data.password);
+    if (result) {
+      setUser({ isAuthenticated: true, user: userObj });
       toast.success("Logged in", { position: "bottom-right" });
       router.push("/");
     } else {
