@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { registerUser } from "@/service/authService";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -33,36 +34,28 @@ const Register = () => {
     }
 
     setIsLoading(true);
-    const url = `/api/register`;
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: data.name,
-        email: data.email,
-        password: data.password,
-      }),
-    });
+    const [res, status] = await registerUser(
+      data.name,
+      data.email,
+      data.password
+    );
     setIsLoading(false);
 
-    const response = await res.json();
-
-    if (res.ok) {
+    if (status) {
       toast.success("Registration successful. Login now!", {
         position: "bottom-right",
       });
       reset();
     } else {
-      Object.keys(response).forEach((fieldName: any) => {
+      Object.keys(res).forEach((fieldName: any) => {
         setError(fieldName, {
           type: "server",
-          message: response[fieldName].join(" "),
+          message: res[fieldName].join(" "),
         });
       });
-      toast.error("Invalid username or email", { position: "bottom-right" });
+      toast.error("Some error occurred. Try again!", {
+        position: "bottom-right",
+      });
     }
   };
 

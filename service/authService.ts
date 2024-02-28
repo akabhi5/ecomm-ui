@@ -107,3 +107,26 @@ export async function getUserObj() {
 //   });
 //   return res;
 // }
+
+export async function registerUser(
+  name: string,
+  email: string,
+  password: string
+) {
+  const data = { name, email, password };
+  const url = `${process.env.API_URL}/user/register/`;
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  const result = await res.json();
+  if (res.ok) {
+    return [result, true];
+  }
+  return [result, false];
+}
