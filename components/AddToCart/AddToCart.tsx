@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { useCartStore } from "@/store/cartStore";
 import { CartItem } from "@/types/cart";
 import { useEffect, useState } from "react";
-import { addItemToCart } from "@/service/cartService";
+import { addItemToCart, removeItemFromCart } from "@/service/cartService";
 
 interface Props {
   productSlug: string;
@@ -38,15 +38,8 @@ const AddToCart = ({ productSlug }: Props) => {
   };
 
   const removeFromCart = async () => {
-    const res = await fetch(url, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ productSlug: productSlug }),
-    });
-    if (res.ok) {
+    const res = await removeItemFromCart(productSlug);
+    if (res) {
       remove(productSlug);
       setIsInCart(false);
       toast.success("Removed cart!", { position: "bottom-right" });
