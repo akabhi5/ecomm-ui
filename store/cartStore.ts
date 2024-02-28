@@ -1,5 +1,6 @@
 import { CartItem } from "@/types/cart";
 import { create } from "zustand";
+import { devtools, persist } from "zustand/middleware";
 
 interface CartState {
   cart: CartItem[];
@@ -24,26 +25,35 @@ function updateQuantityBySlug(
   return newArray;
 }
 
-export const useCartStore = create<CartState>()((set) => ({
-  cart: [] as CartItem[],
-  add: (cartItem: CartItem) =>
-    set((state) => ({ cart: [...state.cart, cartItem] })),
-  addBulk: (cartItems: CartItem[]) =>
-    set((state) => ({ cart: [...cartItems] })),
-  remove: (productSlug: string) =>
-    set((state) => {
-      const cartData = state.cart.filter(
-        (item) => item.product.slug !== productSlug
-      );
-      return { cart: [...cartData] };
-    }),
-  change: (productSlug: string, quantity: number) =>
-    set((state) => {
-      const updatedCart = updateQuantityBySlug(
-        state.cart,
-        productSlug,
-        quantity
-      );
-      return { cart: [...updatedCart] };
-    }),
-}));
+export const useCartStore = create<CartState>()(
+  devtools(
+    persist(
+      (set) => ({
+        cart: [] as CartItem[],
+        add: (cartItem: CartItem) =>
+          set((state) => ({ cart: [...state.cart, cartItem] })),
+        addBulk: (cartItems: CartItem[]) =>
+          set((state) => ({ cart: [...cartItems] })),
+        remove: (productSlug: string) =>
+          set((state) => {
+            const cartData = state.cart.filter(
+              (item) => item.product.slug !== productSlug
+            );
+            return { cart: [...cartData] };
+          }),
+        change: (productSlug: string, quantity: number) =>
+          set((state) => {
+            const updatedCart = updateQuantityBySlug(
+              state.cart,
+              productSlug,
+              quantity
+            );
+            return { cart: [...updatedCart] };
+          }),
+      }),
+      {
+        name: "cart-store",
+      }
+    )
+  )
+);
