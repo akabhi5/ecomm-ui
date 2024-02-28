@@ -7,36 +7,15 @@ import { Review } from "@/types/review";
 import { moveObjectToZeroIndex } from "@/utils";
 import { useUserStore } from "@/store/userStore";
 import toast from "react-hot-toast";
+import {
+  addProductReview,
+  deleteProductReview,
+  getProductReviews,
+} from "@/service/reviewService";
 
 interface Props {
   productSlug: string;
 }
-
-const getProductReviews = async (productSlug: string) => {
-  const res = await fetch(`/api/reviews/${productSlug}`);
-  return await res.json();
-};
-
-const deleteReview = async (productSlug: string) => {
-  const res = await fetch(`/api/reviews/${productSlug}`, { method: "DELETE" });
-  return res.ok;
-};
-
-const postReviews = async (
-  productSlug: string,
-  comment: string
-): Promise<[boolean, Review, number]> => {
-  const res = await fetch(`/api/reviews/${productSlug}`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ comment: comment }),
-  });
-  const result: Review = await res.json();
-  return [res.ok, result, res.status];
-};
 
 const Reviews = ({ productSlug }: Props) => {
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -57,7 +36,7 @@ const Reviews = ({ productSlug }: Props) => {
   }, [productSlug, user.id]);
 
   const deleteComment = async () => {
-    const isSuccess = await deleteReview(productSlug);
+    const isSuccess = await deleteProductReview(productSlug);
     if (isSuccess) {
       const existingReviews = [...reviews];
       existingReviews.shift();
@@ -70,7 +49,7 @@ const Reviews = ({ productSlug }: Props) => {
 
   const onSubmitComment = async (comment: string) => {
     setIsSubmittingComment(true);
-    const [isSuccess, newComment, status] = await postReviews(
+    const [isSuccess, newComment, status] = await addProductReview(
       productSlug,
       comment
     );
