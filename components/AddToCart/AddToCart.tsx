@@ -23,6 +23,7 @@ const AddToCart = ({ productSlug }: Props) => {
     for (const cartItem of cart) {
       if (cartItem.product.slug == productSlug) {
         setIsInCart(true);
+        break;
       }
     }
   }, [cart, productSlug]);

@@ -3,7 +3,6 @@
 import CartSection from "@/components/CartSection/CartSection";
 import UserCartSummary from "@/components/UserCartSummary/UserCartSummary";
 import { useCartStore } from "@/store/cartStore";
-import { useEffect } from "react";
 
 const Cart = () => {
   const cart = useCartStore((cart) => cart.cart);

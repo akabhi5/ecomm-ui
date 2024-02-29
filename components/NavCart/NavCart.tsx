@@ -2,7 +2,6 @@
 
 import { getCartItems } from "@/service/cartService";
 import { useCartStore } from "@/store/cartStore";
-import { CartItem } from "@/types/cart";
 import { ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";

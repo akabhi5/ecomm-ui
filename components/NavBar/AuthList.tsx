@@ -8,6 +8,7 @@ import Spinner from "../Spinner/Spinner";
 import toast from "react-hot-toast";
 import NavCart from "../NavCart/NavCart";
 import { getUserObj, logout } from "@/service/authService";
+import NavWishlist from "../NavWishlist/NavWishlist";
 
 const AuthList = () => {
   const user = useUserStore();
@@ -54,6 +55,9 @@ const AuthList = () => {
         <>
           <li>
             <NavCart href="/cart" />
+          </li>
+          <li>
+            <NavWishlist href="/wishlist" />
           </li>
           <li>
             <Link href="/profile" className="hover:underline">
