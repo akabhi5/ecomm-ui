@@ -9,16 +9,16 @@ import { useUserStore } from "@/store/userStore";
 
 interface Props {
   productSlug: string;
+  selectedSize: string;
 }
 
-const AddToCart = ({ productSlug }: Props) => {
+const AddToCart = ({ productSlug, selectedSize }: Props) => {
   const [isInCart, setIsInCart] = useState(false);
   const isAuth = useUserStore((user) => user.isAuthenticated);
 
   const add = useCartStore((cart) => cart.add);
   const cart = useCartStore((cart) => cart.cart);
   const remove = useCartStore((cart) => cart.remove);
-  const url = "/api/cart";
 
   useEffect(() => {
     for (const cartItem of cart) {
@@ -34,6 +34,12 @@ const AddToCart = ({ productSlug }: Props) => {
       toast.error("Please login!", { position: "bottom-right" });
       return;
     }
+
+    if (selectedSize === "") {
+      toast.error("Select a size", { position: "bottom-right" });
+      return;
+    }
+
     const defaultQuantity = 1;
     const [cartItem, res] = await addItemToCart(defaultQuantity, productSlug);
     if (res) {

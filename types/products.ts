@@ -7,6 +7,7 @@ export interface Product {
   created_on: string;
   updated_on: string;
   product_images: ProductImage[];
+  size_quantity: SizeQuantity;
 }
 
 export interface ProductImage {
@@ -19,4 +20,12 @@ export interface ProductPartial {
   name: string;
   slug: string;
   product_images: ProductImage[];
+}
+
+export interface SizeQuantity {
+  xs: number;
+  s: number;
+  m: number;
+  l: number;
+  xl: number;
 }

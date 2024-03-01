@@ -1,9 +1,11 @@
-import { Product } from "@/types/products";
+import { Product, SizeQuantity } from "@/types/products";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
 import Reviews from "@/components/Reviews/Reviews";
 import AddToCart from "@/components/AddToCart/AddToCart";
 import AddToWishlist from "@/components/AddToWishlist/AddToWishlist";
+import ProductSizeBtns from "@/components/ProductSizeBtns/ProductSizeBtns";
+import ProductPageActions from "@/components/ProductPageActions/ProductPageActions";
 
 async function getData(slug: string) {
   const res = await fetch(`${process.env.API_URL}/products/${slug}/`);
@@ -17,6 +19,12 @@ async function getData(slug: string) {
 
 const Product = async ({ params }: { params: { slug: string } }) => {
   const product: Product = await getData(params.slug);
+
+  const productSizes = Object.entries(product.size_quantity).map(
+    ([key, value]) => {
+      return { size: key, quantity: value };
+    }
+  );
 
   return (
     <section className="px-14 mx-auto my-10">
@@ -35,9 +43,11 @@ const Product = async ({ params }: { params: { slug: string } }) => {
         <div className="col-span-4 space-y-5">
           <div className="text-4xl">{product.name}</div>
           <div className="text-2xl text-slate-700">₹ {product.price}</div>
-          <div className="flex space-x-5">
-            <AddToCart productSlug={params.slug} />
-            <AddToWishlist productSlug={params.slug} />
+          <div>
+            <ProductPageActions
+              productSizes={productSizes}
+              prductSlug={params.slug}
+            />
           </div>
           <div>{product.description}</div>
         </div>
