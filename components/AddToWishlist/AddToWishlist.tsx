@@ -9,12 +9,15 @@ import {
   removeItemFromWishlist,
 } from "@/service/wishlistService";
 import { Heart } from "lucide-react";
+import { useUserStore } from "@/store/userStore";
 
 interface Props {
   productSlug: string;
 }
 
 const AddToWishlist = ({ productSlug }: Props) => {
+  const isAuth = useUserStore((user) => user.isAuthenticated);
+
   const [isInCart, setIsInCart] = useState(false);
 
   const add = useWishlistStore((wishlist) => wishlist.add);
@@ -31,6 +34,10 @@ const AddToWishlist = ({ productSlug }: Props) => {
   }, [wishlist, productSlug]);
 
   const addToWishlist = async () => {
+    if (!isAuth) {
+      toast.error("Please login!", { position: "bottom-right" });
+      return;
+    }
     const [wishlistItem, res] = await addItemToWishist(productSlug);
     if (res) {
       add(wishlistItem);
@@ -40,6 +47,10 @@ const AddToWishlist = ({ productSlug }: Props) => {
   };
 
   const removeFromCart = async () => {
+    if (!isAuth) {
+      toast.error("Please login!", { position: "bottom-right" });
+      return;
+    }
     const res = await removeItemFromWishlist(productSlug);
     if (res) {
       remove(productSlug);

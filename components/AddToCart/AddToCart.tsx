@@ -3,9 +3,9 @@
 import toast from "react-hot-toast";
 import { Button } from "../ui/button";
 import { useCartStore } from "@/store/cartStore";
-import { CartItem } from "@/types/cart";
 import { useEffect, useState } from "react";
 import { addItemToCart, removeItemFromCart } from "@/service/cartService";
+import { useUserStore } from "@/store/userStore";
 
 interface Props {
   productSlug: string;
@@ -13,6 +13,7 @@ interface Props {
 
 const AddToCart = ({ productSlug }: Props) => {
   const [isInCart, setIsInCart] = useState(false);
+  const isAuth = useUserStore((user) => user.isAuthenticated);
 
   const add = useCartStore((cart) => cart.add);
   const cart = useCartStore((cart) => cart.cart);
@@ -29,6 +30,10 @@ const AddToCart = ({ productSlug }: Props) => {
   }, [cart, productSlug]);
 
   const addToCart = async () => {
+    if (!isAuth) {
+      toast.error("Please login!", { position: "bottom-right" });
+      return;
+    }
     const defaultQuantity = 1;
     const [cartItem, res] = await addItemToCart(defaultQuantity, productSlug);
     if (res) {
@@ -39,6 +44,11 @@ const AddToCart = ({ productSlug }: Props) => {
   };
 
   const removeFromCart = async () => {
+    if (!isAuth) {
+      toast.error("Please login!", { position: "bottom-right" });
+      return;
+    }
+
     const res = await removeItemFromCart(productSlug);
     if (res) {
       remove(productSlug);
