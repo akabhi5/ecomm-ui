@@ -20,7 +20,7 @@ const ProductSizeBtns = ({
         <Button
           variant={selectedSize === size.size ? "default" : "outline"}
           className={cn(
-            `rounded-full border-2 w-11`,
+            `rounded-full border-2 border-black w-11`,
             size.quantity <= 0 && "line-through"
           )}
           key={size.size}

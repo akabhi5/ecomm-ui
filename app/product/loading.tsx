@@ -11,6 +11,13 @@ const Loading = () => {
         <div className="col-span-4 space-y-5">
           <Skeleton className="w-full h-[50px]" />
           <Skeleton className="w-full h-[40px]" />
+          <div className="flex space-x-2">
+            <Skeleton className="rounded-full h-10 w-10" />
+            <Skeleton className="rounded-full h-10 w-10" />
+            <Skeleton className="rounded-full h-10 w-10" />
+            <Skeleton className="rounded-full h-10 w-10" />
+            <Skeleton className="rounded-full h-10 w-10" />
+          </div>
           <div className="flex space-x-5">
             <Skeleton className="w-[100px] h-[40px]" />
             <Skeleton className="w-[100px] h-[40px]" />
