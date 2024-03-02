@@ -6,6 +6,7 @@ import { useCartStore } from "@/store/cartStore";
 import { useEffect, useState } from "react";
 import { addItemToCart, removeItemFromCart } from "@/service/cartService";
 import { useUserStore } from "@/store/userStore";
+import Link from "next/link";
 
 interface Props {
   productSlug: string;
@@ -16,18 +17,7 @@ const AddToCart = ({ productSlug, selectedSize }: Props) => {
   const [isInCart, setIsInCart] = useState(false);
   const isAuth = useUserStore((user) => user.isAuthenticated);
 
-  const add = useCartStore((cart) => cart.add);
-  const cart = useCartStore((cart) => cart.cart);
-  const remove = useCartStore((cart) => cart.remove);
-
-  useEffect(() => {
-    for (const cartItem of cart) {
-      if (cartItem.product.slug == productSlug) {
-        setIsInCart(true);
-        break;
-      }
-    }
-  }, [cart, productSlug]);
+  const { cart, add, change } = useCartStore();
 
   const addToCart = async () => {
     if (!isAuth) {
@@ -41,30 +31,38 @@ const AddToCart = ({ productSlug, selectedSize }: Props) => {
     }
 
     const defaultQuantity = 1;
-    const [cartItem, res] = await addItemToCart(defaultQuantity, productSlug);
+    const [cartItem, res] = await addItemToCart(
+      defaultQuantity,
+      productSlug,
+      selectedSize
+    );
     if (res) {
-      add(cartItem);
+      let itemAlreadyInCart = false;
+      for (const item of cart) {
+        if (
+          item.product.slug === cartItem.product.slug &&
+          item.size === cartItem.size
+        ) {
+          change(item.product.slug, item.quantity + 1, selectedSize);
+          itemAlreadyInCart = true;
+        }
+      }
+
+      if (!itemAlreadyInCart) {
+        add(cartItem);
+      }
+
       setIsInCart(true);
       toast.success("Added to cart!", { position: "bottom-right" });
     }
   };
 
-  const removeFromCart = async () => {
-    if (!isAuth) {
-      toast.error("Please login!", { position: "bottom-right" });
-      return;
-    }
-
-    const res = await removeItemFromCart(productSlug);
-    if (res) {
-      remove(productSlug);
-      setIsInCart(false);
-      toast.success("Removed cart!", { position: "bottom-right" });
-    }
-  };
-
   if (isInCart)
-    return <Button onClick={removeFromCart}>Remove from cart</Button>;
+    return (
+      <Link href="/cart">
+        <Button>Go to cart &gt;</Button>
+      </Link>
+    );
 
   return <Button onClick={addToCart}>Add to cart</Button>;
 };

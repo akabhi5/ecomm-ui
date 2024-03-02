@@ -24,9 +24,14 @@ export async function getCartItems(): Promise<CartItem[]> {
 
 export async function addItemToCart(
   quantity: number,
-  productSlug: string
+  productSlug: string,
+  selectedSize: string
 ): Promise<[CartItem, boolean]> {
-  const data = { quantity: quantity, product_slug: productSlug };
+  const data = {
+    quantity: quantity,
+    product_slug: productSlug,
+    size: selectedSize,
+  };
   const res = await fetch(url, {
     method: "POST",
     headers: {
@@ -45,9 +50,10 @@ export async function addItemToCart(
 
 export async function changeQuantityOfCartItem(
   quantity: number,
-  productSlug: string
+  productSlug: string,
+  size: string
 ): Promise<boolean> {
-  const deleteUrl = `${url}${productSlug}/`;
+  const deleteUrl = `${url}${productSlug}/${size}/`;
   const res = await fetch(deleteUrl, {
     method: "PATCH",
     headers: {
@@ -64,9 +70,10 @@ export async function changeQuantityOfCartItem(
 }
 
 export async function removeItemFromCart(
-  productSlug: string
+  productSlug: string,
+  size: string
 ): Promise<boolean> {
-  const deleteUrl = `${url}${productSlug}/`;
+  const deleteUrl = `${url}${productSlug}/${size}/`;
   const res = await fetch(deleteUrl, {
     method: "DELETE",
     headers: {

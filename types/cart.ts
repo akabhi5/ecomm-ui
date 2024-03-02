@@ -4,4 +4,5 @@ export interface CartItem {
   id: number;
   quantity: number;
   product: ProductPartial;
+  size: string;
 }

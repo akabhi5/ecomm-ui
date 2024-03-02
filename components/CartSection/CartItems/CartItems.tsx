@@ -21,16 +21,20 @@ const CartItems = ({ item }: Props) => {
 
   const changeQty = async (e: ChangeEvent<HTMLSelectElement>) => {
     const updatedQty = parseInt(e.target.value);
-    const res = await changeQuantityOfCartItem(updatedQty, item.product.slug);
+    const res = await changeQuantityOfCartItem(
+      updatedQty,
+      item.product.slug,
+      item.size
+    );
     if (res) {
-      change(item.product.slug, updatedQty);
+      change(item.product.slug, updatedQty, item.size);
     }
   };
 
   const removeFromCart = async () => {
-    const res = await removeItemFromCart(item.product.slug);
+    const res = await removeItemFromCart(item.product.slug, item.size);
     if (res) {
-      remove(item.product.slug);
+      remove(item.product.slug, item.size);
     }
   };
 
@@ -64,6 +68,9 @@ const CartItems = ({ item }: Props) => {
           <Button variant="outline" size="icon" onClick={removeFromCart}>
             <Trash2 color="red" className="h-4 w-4" />
           </Button>
+        </div>
+        <div className="border-2 px-2 rounded-xl w-20 bg-slate-200">
+          Size: {item.size.toUpperCase()}
         </div>
       </div>
     </div>
