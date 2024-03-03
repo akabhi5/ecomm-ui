@@ -87,3 +87,20 @@ export async function removeItemFromCart(
   }
   return false;
 }
+
+export async function getCartSummary() {
+  const cartSummaryUrl = `${process.env.API_URL}/cart/cart-total/`;
+
+  const res = await fetch(cartSummaryUrl, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${cookies().get("token")?.value}`,
+      "Content-Type": "application/json",
+    },
+  });
+  if (res.ok) {
+    return res.json();
+  }
+  return [];
+}

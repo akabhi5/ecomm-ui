@@ -4,20 +4,39 @@ import {
   removeItemFromCart,
 } from "@/service/cartService";
 import { useCartStore } from "@/store/cartStore";
-import { CartItem } from "@/types/cart";
+import { CartItem, CartSummary, CartSummaryProductInfo } from "@/types/cart";
 import { Trash2 } from "lucide-react";
 import Link from "next/link";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 interface Props {
   item: CartItem;
+  cartSummary: CartSummary;
+  updateCartSummary: () => void;
+  isCartSummaryLoading: boolean;
 }
 
 const allowedQuantities = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-const CartItems = ({ item }: Props) => {
+const CartItems = ({
+  item,
+  cartSummary,
+  updateCartSummary,
+  isCartSummaryLoading,
+}: Props) => {
   const change = useCartStore((cart) => cart.change);
   const remove = useCartStore((cart) => cart.remove);
+  const [productInfo, setProductInfo] = useState<CartSummaryProductInfo>(
+    {} as CartSummaryProductInfo
+  );
+
+  useEffect(() => {
+    const product_info = cartSummary?.product_info?.filter(
+      (product) =>
+        product.product_id === item.product.id && product.size === item.size
+    )[0];
+    setProductInfo(product_info);
+  }, [cartSummary?.product_info, item.product.id, item.size]);
 
   const changeQty = async (e: ChangeEvent<HTMLSelectElement>) => {
     const updatedQty = parseInt(e.target.value);
@@ -27,6 +46,7 @@ const CartItems = ({ item }: Props) => {
       item.size
     );
     if (res) {
+      updateCartSummary();
       change(item.product.slug, updatedQty, item.size);
     }
   };
@@ -34,6 +54,7 @@ const CartItems = ({ item }: Props) => {
   const removeFromCart = async () => {
     const res = await removeItemFromCart(item.product.slug, item.size);
     if (res) {
+      updateCartSummary();
       remove(item.product.slug, item.size);
     }
   };
@@ -68,6 +89,14 @@ const CartItems = ({ item }: Props) => {
           <Button variant="outline" size="icon" onClick={removeFromCart}>
             <Trash2 color="red" className="h-4 w-4" />
           </Button>
+          {isCartSummaryLoading ? (
+            <div>...</div>
+          ) : (
+            <code className="border px-2 rounded">
+              ₹{(productInfo?.price / item.quantity)?.toFixed(2)} x{" "}
+              {item.quantity} = ₹{productInfo?.price?.toFixed(2)}
+            </code>
+          )}
         </div>
         <div className="border-2 px-2 rounded-xl w-20 bg-slate-200">
           Size: {item.size.toUpperCase()}
