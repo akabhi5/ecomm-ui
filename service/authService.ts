@@ -48,10 +48,12 @@ export async function login(email: string, password: string) {
   const result = await res.json();
 
   if (res.ok) {
-    const mins_45 = 45 * 60 * 1000;
+    const oneHour = 60 * 60 * 1000;
+    const oneDay = oneHour * 24;
+    const days_999 = oneDay * 999;
     Object.keys(result).forEach((key) => {
       cookies().set(key, result[key], {
-        expires: Date.now() + mins_45,
+        expires: Date.now() + days_999,
         httpOnly: true,
       });
     });
