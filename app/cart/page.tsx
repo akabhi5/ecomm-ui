@@ -5,6 +5,7 @@ import UserCartSummary from "@/components/UserCartSummary/UserCartSummary";
 import { getCartSummary } from "@/service/cartService";
 import { useCartStore } from "@/store/cartStore";
 import { CartSummary } from "@/types/cart";
+import { ShoppingBag } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const Cart = () => {
@@ -30,25 +31,36 @@ const Cart = () => {
   }, [reloadCartFlag]);
 
   return (
-    <section className="max-w-7xl mx-auto">
+    <section className="max-w-7xl mx-auto px-5">
       <h1 className="my-5 text-4xl">Cart</h1>
 
-      <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-8 rounded">
-          <CartSection
-            cart={cart}
-            cartSummary={cartSummary}
-            updateCartSummary={updateCartSummary}
-            isCartSummaryLoading={isCartSummaryLoading}
-          />
+      {cart.length > 0 ? (
+        <div className="grid grid-cols-12 gap-4">
+          <div className="col-span-8 rounded">
+            <CartSection
+              cart={cart}
+              cartSummary={cartSummary}
+              updateCartSummary={updateCartSummary}
+              isCartSummaryLoading={isCartSummaryLoading}
+            />
+          </div>
+          <div className="col-span-4 border rounded h-60">
+            <UserCartSummary
+              cartSummary={cartSummary}
+              isCartSummaryLoading={isCartSummaryLoading}
+            />
+          </div>
         </div>
-        <div className="col-span-4 border rounded h-60">
-          <UserCartSummary
-            cartSummary={cartSummary}
-            isCartSummaryLoading={isCartSummaryLoading}
-          />
+      ) : (
+        <div className="flex justify-center items-center h-[70vh]">
+          <div>
+            <div className="flex justify-center">
+              <ShoppingBag size={50} color="red" />
+            </div>
+            <div className="text-xl">Cart is empty!</div>
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 };

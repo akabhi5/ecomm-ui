@@ -7,7 +7,7 @@ const WislistPage = () => {
   const wishlistItems = useWishlistStore((wishlist) => wishlist.wishlist);
 
   return (
-    <section className="max-w-7xl mx-auto">
+    <section className="max-w-7xl mx-auto px-5">
       <h1 className="my-5 text-4xl">Wishlist</h1>
 
       <div className="w-7xl">
