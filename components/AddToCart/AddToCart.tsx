@@ -62,7 +62,7 @@ const AddToCart = ({ productSlug, selectedSize }: Props) => {
     return (
       <Link href="/cart">
         <Button>
-          Go to cart <ChevronRight className="h-4 w-4 -mb-1" />
+          Go to cart <ChevronRight className="h-4 w-4" />
         </Button>
       </Link>
     );

@@ -5,8 +5,8 @@ const Loading = () => {
     <section className="px-14 mx-auto my-10">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
         <div className="col-span-7 flex flex-wrap justify-evenly">
-          <Skeleton className="w-[500px] h-[700px]" />
-          <Skeleton className="w-[500px] h-[700px]" />
+          <Skeleton className="w-[500px] h-[400px]" />
+          <Skeleton className="w-[500px] h-[400px]" />
         </div>
         <div className="col-span-5 space-y-5">
           <Skeleton className="w-full h-[50px]" />
