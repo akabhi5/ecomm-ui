@@ -1,12 +1,13 @@
 "use client";
 
+import { addItemToCart } from "@/service/cartService";
+import { useCartStore } from "@/store/cartStore";
+import { useUserStore } from "@/store/userStore";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { Button } from "../ui/button";
-import { useCartStore } from "@/store/cartStore";
-import { useEffect, useState } from "react";
-import { addItemToCart, removeItemFromCart } from "@/service/cartService";
-import { useUserStore } from "@/store/userStore";
-import Link from "next/link";
 
 interface Props {
   productSlug: string;
@@ -60,7 +61,9 @@ const AddToCart = ({ productSlug, selectedSize }: Props) => {
   if (isInCart)
     return (
       <Link href="/cart">
-        <Button>Go to cart &gt;</Button>
+        <Button>
+          Go to cart <ChevronRight className="h-4 w-4 -mb-1" />
+        </Button>
       </Link>
     );
 

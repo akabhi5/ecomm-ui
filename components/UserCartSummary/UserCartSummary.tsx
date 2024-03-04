@@ -14,11 +14,11 @@ const UserCartSummary = ({ cartSummary, isCartSummaryLoading }: Props) => {
       <div>
         <div className="flex justify-between">
           <div>Total MRP</div>
-          <div>₹{cartSummary.total_price}</div>
+          <div>₹{cartSummary?.total_price?.toFixed(2)}</div>
         </div>
         <div className="flex justify-between">
           <div>Discount on MRP</div>
-          <div>₹{cartSummary.discount}</div>
+          <div>₹{cartSummary?.discount?.toFixed(2)}</div>
         </div>
         <div className="flex justify-between">
           <div>Shipping charge</div>
@@ -30,7 +30,7 @@ const UserCartSummary = ({ cartSummary, isCartSummaryLoading }: Props) => {
       </div>
       <div className="flex justify-between">
         <div>Total Amount</div>
-        <div>₹{cartSummary.total_price}</div>
+        <div>₹{cartSummary?.total_price?.toFixed(2)}</div>
       </div>
       {isCartSummaryLoading ? (
         <div>

@@ -1,11 +1,6 @@
-import { Product, SizeQuantity } from "@/types/products";
-import { Button } from "@/components/ui/button";
-import { Heart } from "lucide-react";
-import Reviews from "@/components/Reviews/Reviews";
-import AddToCart from "@/components/AddToCart/AddToCart";
-import AddToWishlist from "@/components/AddToWishlist/AddToWishlist";
-import ProductSizeBtns from "@/components/ProductSizeBtns/ProductSizeBtns";
 import ProductPageActions from "@/components/ProductPageActions/ProductPageActions";
+import Reviews from "@/components/Reviews/Reviews";
+import { Product } from "@/types/products";
 
 async function getData(slug: string) {
   const res = await fetch(`${process.env.API_URL}/products/${slug}/`);

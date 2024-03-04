@@ -46,7 +46,7 @@ const AddToWishlist = ({ productSlug }: Props) => {
     }
   };
 
-  const removeFromCart = async () => {
+  const removeFromWishlist = async () => {
     if (!isAuth) {
       toast.error("Please login!", { position: "bottom-right" });
       return;
@@ -55,13 +55,13 @@ const AddToWishlist = ({ productSlug }: Props) => {
     if (res) {
       remove(productSlug);
       setIsInCart(false);
-      toast.success("Removed cart!", { position: "bottom-right" });
+      toast.success("Removed from wishlist!", { position: "bottom-right" });
     }
   };
 
   if (isInCart)
     return (
-      <Button variant="outline" onClick={removeFromCart}>
+      <Button variant="outline" onClick={removeFromWishlist}>
         <Heart color="red" fill="red" className="mr-2 h-4 w-4" /> Remove from
         wishlist
       </Button>
