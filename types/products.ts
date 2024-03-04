@@ -1,3 +1,5 @@
+import { BrandPartial } from "./brand";
+
 export interface Product {
   id: number;
   name: string;
@@ -8,6 +10,7 @@ export interface Product {
   updated_on: string;
   product_images: ProductImage[];
   size_quantity: SizeQuantity;
+  brand: BrandPartial;
 }
 
 export interface ProductImage {

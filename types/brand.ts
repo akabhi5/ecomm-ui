@@ -18,3 +18,8 @@ export interface BrandProduct {
   seller: number;
   brand_products: Product[];
 }
+
+export interface BrandPartial {
+  id: number;
+  name: string;
+}
