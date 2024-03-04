@@ -25,7 +25,7 @@ const NavWishlist = ({ href }: Props) => {
 
   return (
     <Link href={href} className="flex items-center">
-      <Heart size={25} />
+      <Heart size={20} />
       {isLoading ? "-" : <span> {wishlist.length}</span>}
     </Link>
   );

@@ -26,7 +26,7 @@ const NavCart = ({ href }: Props) => {
 
   return (
     <Link href={href} className="flex items-center">
-      <ShoppingBag size={25} />
+      <ShoppingBag size={20} />
       {isLoading ? "-" : <span> {cart.length}</span>}
     </Link>
   );

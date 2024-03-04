@@ -2,18 +2,16 @@
 
 import { useUserStore } from "@/store/userStore";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { getUserObj } from "@/service/authService";
 import { useEffect, useState } from "react";
-import Spinner from "../Spinner/Spinner";
-import toast from "react-hot-toast";
 import NavCart from "../NavCart/NavCart";
-import { getUserObj, logout } from "@/service/authService";
 import NavWishlist from "../NavWishlist/NavWishlist";
+import Spinner from "../Spinner/Spinner";
+import UserActions from "./UserActions";
 
 const AuthList = () => {
   const user = useUserStore();
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     const getAuthStatus = async () => {
@@ -25,19 +23,12 @@ const AuthList = () => {
     getAuthStatus();
   }, []);
 
-  const logoutAction = async () => {
-    await logout();
-    user.logout();
-    toast.success("Logged out", { position: "bottom-right" });
-    router.push("/");
-  };
-
   if (isLoading) return <Spinner />;
 
   return (
-    <>
+    <div>
       {!user.isAuthenticated && (
-        <>
+        <ul className="flex space-x-5">
           <li>
             <Link href="/login" className="hover:underline">
               Login
@@ -48,31 +39,23 @@ const AuthList = () => {
               Register
             </Link>
           </li>
-        </>
+        </ul>
       )}
 
       {user.isAuthenticated && (
-        <>
+        <ul className="flex space-x-5 items-center ">
           <li>
-            <NavCart href="/cart" />
+            <UserActions />
           </li>
           <li>
             <NavWishlist href="/wishlist" />
           </li>
           <li>
-            <Link href="/profile" className="hover:underline">
-              Profile
-            </Link>
+            <NavCart href="/cart" />
           </li>
-          <li
-            className="hover:underline cursor-pointer"
-            onClick={() => logoutAction()}
-          >
-            Logout
-          </li>
-        </>
+        </ul>
       )}
-    </>
+    </div>
   );
 };
 
