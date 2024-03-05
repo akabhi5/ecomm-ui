@@ -1,14 +1,7 @@
 "use client";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
-import Image from "next/image";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
 
 const HeroCarousel = () => {
   const images = [
@@ -21,26 +14,21 @@ const HeroCarousel = () => {
   ];
 
   return (
-    <Carousel
-      className="w-full"
-      plugins={[
-        Autoplay({
-          delay: 2000,
-        }),
-      ]}
-    >
-      <CarouselContent>
+    <div className="">
+      <Carousel
+        showThumbs={false}
+        showArrows={false}
+        showStatus={false}
+        autoPlay={true}
+        infiniteLoop={true}
+      >
         {images.map((img) => (
-          <CarouselItem key={img.id}>
-            <div className="w-[100%] sm:h-56 lg:h-72 xl:h-96 relative">
-              <Image src={img.image} alt="" layout="fill" objectFit="contain" />
-            </div>
-          </CarouselItem>
+          <div key={img.id}>
+            <img src={img.image} />
+          </div>
         ))}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
+      </Carousel>
+    </div>
   );
 };
 
