@@ -1,11 +1,15 @@
 import Link from "next/link";
 import AuthList from "./AuthList";
+import { Crown } from "lucide-react";
 
 const NavBar = () => {
   return (
     <nav className="p-5 flex justify-between shadow-xl">
       <div className="text-2xl font-bold">
-        <Link href="/">Ecomm</Link>
+        <Link href="/" className="flex items-center space-x-2">
+          <Crown fill="black" size={25} />
+          <div>Ecomm</div>
+        </Link>
       </div>
       <div className="flex">
         <div className="mr-3">
