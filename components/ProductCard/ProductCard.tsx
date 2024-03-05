@@ -14,10 +14,12 @@ const ProductCard = ({ product }: Props) => {
           alt={product.name}
           className="w-fit max-h-[250px] min-w-[200px] min-h-[250px] object-cover"
         />
-        <div className="p-2 text-center">
-          <div>{product.name}</div>
+        <div className="p-2 text-left">
+          <div>{product.brand.name}</div>
+          <div className="text-xs">{product.name}</div>
           <div>
-            Price: <span className="text-slate-600">₹ {product.price}</span>
+            Price:{" "}
+            <span className="text-slate-600 text-sm">₹ {product.price}</span>
           </div>
         </div>
       </Link>
