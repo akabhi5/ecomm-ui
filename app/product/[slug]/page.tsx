@@ -56,7 +56,7 @@ const Product = async ({ params }: { params: { slug: string } }) => {
           <div>
             <hr />
           </div>
-          <div>{product.description}</div>
+          <div dangerouslySetInnerHTML={{ __html: product.description }} />
         </div>
       </div>
       <hr className="my-16" />
