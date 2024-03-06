@@ -56,7 +56,10 @@ const Product = async ({ params }: { params: { slug: string } }) => {
           <div>
             <hr />
           </div>
-          <div dangerouslySetInnerHTML={{ __html: product.description }} />
+          <div
+            className="prose prose-li:list-disc"
+            dangerouslySetInnerHTML={{ __html: product.description }}
+          />
         </div>
       </div>
       <hr className="my-16" />
