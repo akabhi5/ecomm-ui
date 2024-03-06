@@ -4,6 +4,7 @@ import "./globals.css";
 import NavBar from "@/components/NavBar/NavBar";
 import { Toaster } from "react-hot-toast";
 import NextTopLoader from "nextjs-toploader";
+import Footer from "@/components/Footer/Footer";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -25,7 +26,8 @@ export default function RootLayout({
       <body className={poppins.className}>
         <NextTopLoader color="#FF3131" showSpinner={false} />
         <NavBar />
-        {children}
+        <div className="min-h-[60vh]">{children}</div>
+        <Footer />
         <Toaster />
       </body>
     </html>
