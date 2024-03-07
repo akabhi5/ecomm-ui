@@ -12,7 +12,7 @@ const ProductCard = ({ product }: Props) => {
         <img
           src={product.product_images[0].url}
           alt={product.name}
-          className="w-fit max-h-[250px] min-w-[200px] min-h-[250px] object-cover"
+          className="w-fit max-h-[250px] min-w-full min-h-[250px] object-cover"
         />
         <div className="p-2 text-left">
           <div>{product.brand.name}</div>
