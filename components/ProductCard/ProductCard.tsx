@@ -15,7 +15,7 @@ const ProductCard = ({ product }: Props) => {
           className="w-fit max-h-[250px] min-w-full min-h-[250px] object-cover"
         />
         <div className="p-2 text-left">
-          <div>{product.brand.name}</div>
+          <div>{product?.brand?.name}</div>
           <div className="text-xs">{product.name}</div>
           <div>
             Price:{" "}
