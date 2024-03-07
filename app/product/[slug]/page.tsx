@@ -4,7 +4,9 @@ import Reviews from "@/components/Reviews/Reviews";
 import { Product } from "@/types/products";
 
 async function getData(slug: string) {
-  const res = await fetch(`${process.env.API_URL}/products/${slug}/`);
+  const res = await fetch(`${process.env.API_URL}/products/${slug}/`, {
+    cache: "no-store",
+  });
 
   if (!res.ok) {
     throw new Error("Failed to fetch data");
@@ -56,10 +58,7 @@ const Product = async ({ params }: { params: { slug: string } }) => {
           <div>
             <hr />
           </div>
-          <div
-            className="prose prose-li:list-disc"
-            dangerouslySetInnerHTML={{ __html: product.description }}
-          />
+          <div dangerouslySetInnerHTML={{ __html: product.description }} />
         </div>
       </div>
       <hr className="my-16" />
