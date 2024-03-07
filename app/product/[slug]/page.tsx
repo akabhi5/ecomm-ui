@@ -4,9 +4,7 @@ import Reviews from "@/components/Reviews/Reviews";
 import { Product } from "@/types/products";
 
 async function getData(slug: string) {
-  const res = await fetch(`${process.env.API_URL}/products/${slug}/`, {
-    cache: "no-store",
-  });
+  const res = await fetch(`${process.env.API_URL}/products/${slug}/`);
 
   if (!res.ok) {
     throw new Error("Failed to fetch data");
